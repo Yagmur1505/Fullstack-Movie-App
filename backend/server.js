@@ -3,6 +3,7 @@ const http = require("http");
 const getRequest = require("./methods/get");
 const postRequest = require("./methods/post");
 const deleteRequest = require("./methods/delete");
+const optionsRequest = require("./methods/options");
 
 // 1) HTTP server oluştur
 const server = http.createServer((request, response) => {
@@ -10,6 +11,8 @@ const server = http.createServer((request, response) => {
   response.setHeader("Content-Type", "application/json");
   // kaynak paylaşımında sorun yaşamamak ve corss hatasını yaşamamk için yeni bir header ekliyoruz.
   response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+
+  console.log("istek geldi", request.method);
   // Gelen isteğin method türüne göre client'a farklı cevaplar göndereceğiz.
   switch (request.method) {
     case "GET":
@@ -20,6 +23,9 @@ const server = http.createServer((request, response) => {
 
     case "DELETE":
       return deleteRequest(request, response);
+
+    case "OPTIONS":
+      return optionsRequest(request, response);
 
     default:
       return deleteRequest(request, response);

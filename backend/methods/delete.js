@@ -11,14 +11,14 @@ const deleteRequest = (req, res) => {
     // bütün filmleri al
     const data = JSON.parse(fs.readFileSync("./data/movies.json", "utf-8"));
     // parametre olarak gelen idli film dizi var mı ara
-    const isFound = data.movies.find((i) => i.id === id);
+    const isFound = data.find((i) => i.id === id);
     // yoksa id geçersiz hatası gönder
     if (!isFound) {
       res.writeHead(404);
       return res.end("Gönderilen id`li eleman bulunamadı");
     }
     // diziden id si bilinen filmi kaldır
-    const filtred = data.movies.filter((i) => i.id !== id);
+    const filtred = data.filter((i) => i.id !== id);
     // json dosyasına yeni diziyi aktar
     fs.writeFileSync("./data/movies.json", JSON.stringify(filtred));
     // client a cevap gönder
